@@ -1,0 +1,65 @@
+{
+  "name": "CryptoSignal MVP Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "triggerOn": "webhook_url"
+      },
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:3000/api/signal/generate",
+        "method": "POST",
+        "bodyParametersUi": {
+          "parameter": [
+            {
+              "name": "cryptoId",
+              "value": "bitcoin"
+            }
+          ]
+        }
+      },
+      "name": "Generate Signal",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "schema": "public",
+        "table": "signals",
+        "columns": "crypto_id,price,signal,confidence",
+        "fieldsUi": {
+          "field": [
+            {
+              "name": "crypto_id",
+              "value": "={{ $json.cryptoId }}"
+            },
+            {
+              "name": "signal",
+              "value": "={{ $json.signal }}"
+            },
+            {
+              "name": "confidence",
+              "value": "={{ $json.confidence }}"
+            }
+          ]
+        }
+      },
+      "name": "Save to Supabase",
+      "type": "n8n-nodes-postgres",
+      "position": [650, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [[{ "node": "Generate Signal", "branch": 0 }]]
+    },
+    "Generate Signal": {
+      "main": [[{ "node": "Save to Supabase", "branch": 0 }]]
+    }
+  }
+}

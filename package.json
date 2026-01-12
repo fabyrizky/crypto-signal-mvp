@@ -1,0 +1,32 @@
+{
+  "name": "crypto-signal-mvp",
+  "version": "1.0.0",
+  "description": "AI-powered crypto trading signal tool",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "jest --testMatch='**/tests/**/*.test.js'",
+    "n8n:import": "curl -X POST http://localhost:5678/api/v1/workflows -H \"Content-Type: application/json\" -d @n8n-workflow.json"
+  },
+  "keywords": [
+    "crypto",
+    "trading",
+    "signals",
+    "n8n"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.90.1",
+    "axios": "^1.13.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "groq-sdk": "^0.37.0"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}
