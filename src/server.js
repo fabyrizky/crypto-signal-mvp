@@ -4,10 +4,14 @@ const axios = require('axios');
 require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 
+const path = require('path');
 const CryptoSignalGenerator = require('./services/signalGenerator');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Serve static files from public folder
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Init clients (graceful if not configured)
 const supabaseConfigured = process.env.SUPABASE_URL &&
