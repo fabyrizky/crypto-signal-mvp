@@ -18,8 +18,8 @@ const supabase = supabaseConfigured ? createClient(
 ) : null;
 
 const signalGen = new CryptoSignalGenerator({
-  COINGECKO_API: process.env.COINGECKO_API,
-  BINANCE_API: process.env.BINANCE_API
+  COINGECKO_API: process.env.COINGECKO_API || 'https://api.coingecko.com/api/v3',
+  BINANCE_API: process.env.BINANCE_API || 'https://api.binance.com/api/v3'
 });
 
 // Middleware
