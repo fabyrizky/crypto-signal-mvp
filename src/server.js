@@ -101,8 +101,14 @@ async function triggerN8nWorkflow(payload) {
   }
 }
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Signal endpoint: POST /api/signal/generate`);
-  console.log(`Portfolio endpoint: POST /api/portfolio/analyze`);
-});
+// Local dev server
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Signal endpoint: POST /api/signal/generate`);
+    console.log(`Portfolio endpoint: POST /api/portfolio/analyze`);
+  });
+}
+
+// Export for Vercel
+module.exports = app;
